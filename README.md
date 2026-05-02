@@ -6,6 +6,42 @@ A customer joins a video call with an AI agent named **Maya**, has a natural con
 
 ---
 
+
+![Home](./images/home.png)
+##  UI Preview
+
+<details>
+<summary>Click to view screenshots</summary>
+
+<br>
+
+![Screen](./images/home.png)
+![Screen](./images/1.png)
+![Screen](./images/2.png)
+![Screen](./images/3.png)
+
+![Screen](./images/4.png)
+![Screen](./images/5.png)
+![Screen](./images/6.png)
+![Screen](./images/7.png)
+
+
+![Screen](./images/8.png)
+![Screen](./images/9.png)
+![Screen](./images/10.png)
+![Screen](./images/11.png)
+
+![Screen](./images/12.png)
+![Screen](./images/13.png)
+![Screen](./images/14.png)
+
+
+</details>
+
+
+---
+
+
 ## What's included (mapped to the problem statement)
 
 | Requirement | Where it lives |
