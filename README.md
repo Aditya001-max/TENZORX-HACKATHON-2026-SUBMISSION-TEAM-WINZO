@@ -1,10 +1,8 @@
 # Poonawalla Fincorp — Agentic AI Video Loan Wizard
 
-A working end-to-end prototype of a **video-call based, agentic AI loan onboarding system**, built against the Poonawalla Fincorp problem statement (Video-Based Digital Loan Origination & Risk Assessment).
+A working  **video-call based, agentic AI loan onboarding system**, built against the Poonawalla Fincorp problem statement 3.
+A customer joins a video call with an AI agent named **Maya**, has a natural conversation about employment, income and loan purpose, gives verbal consent, and walks away with a personalised loan offer. Behind the scenes the system runs computer vision age estimation on the live video, deterministic policy + risk scoring, an LLM-style intelligence layer, and a tamper-evident audit trail in a central repository.
 
-A customer joins a video call with an AI agent named **Maya**, has a natural conversation about employment, income and loan purpose, gives verbal consent, and walks away with a personalised loan offer — all in under three minutes. Behind the scenes the system runs computer-vision age estimation on the live video, deterministic policy + risk scoring, an LLM-style intelligence layer (rule-based for offline operation), and a tamper-evident audit trail in a central repository.
-
-> **No API keys required.** Everything runs locally — speech recognition uses the browser's Web Speech API, age estimation uses OpenCV, the bureau call is mocked deterministically.
 
 ---
 
@@ -78,43 +76,21 @@ loan-wizard/
 
 ### Prerequisites
 - **Python 3.10 or newer**
-- A modern Chromium-based browser (Chrome / Edge / Brave) — Web Speech API is best supported there
+- A modern version browser like chrome
 - A working webcam and microphone
 
-### macOS / Linux
-
-```bash
-cd loan-wizard
-chmod +x run.sh
-./run.sh
-```
-
-### Windows
+### Commands for run 
 
 ```bat
 cd loan-wizard
 run.bat
 ```
-
-### Manual (any OS)
-
-```bash
-cd loan-wizard/backend
-python -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 8000
-```
-
 Then open **http://localhost:8000** in your browser.
-
-> The Web Speech API and `getUserMedia` only work on `https://` URLs **or** on `localhost`. Using `127.0.0.1` or `localhost` is fine; using your LAN IP from another device will need HTTPS.
-
 The admin dashboard is at **http://localhost:8000/admin**.
 
 ---
 
-## Demo script (try this on the call)
+## Demo that i have checked 
 
 When Maya greets you, speak naturally — push and hold the **mic button**, talk, then release. (You can also click **Type instead** if your environment has no mic.)
 
@@ -149,28 +125,6 @@ The same conversation appears in real time on `/admin`.
 | `WS`   | `/ws/session/{sid}` | Live event stream (turns, age, finalisation) |
 
 Interactive OpenAPI docs at **http://localhost:8000/docs**.
-
----
-
-## Design notes
-
-- **Deterministic by design.** The risk engine is the source of truth. The "agent" layer can suggest, summarise and converse, but it cannot overturn a hard policy failure — directly addressing problem statement 2.1.7.
-- **Bureau is mocked deterministically.** `fetch_bureau_score(pan, phone)` hashes the inputs so the same customer always gets the same outcome — useful for repeatable demos. Roughly 65% clean, 25% borderline, 10% serious delinquency.
-- **FOIR-driven eligibility.** Maximum eligible EMI = monthly income × 0.55 (configurable in `risk_engine.POLICY`). Five tenures from 12 to 60 months are computed; the middle tenure is recommended.
-- **CV age estimation is heuristic** (Haar cascade + edge density + Laplacian variance). It is intentionally simple so the prototype runs offline on any laptop. In production this would be swapped for a trained CNN — the function signature in `vision.estimate_age` already returns the same shape a CNN would.
-- **Audit trail.** Every meaningful event (session start, geo, transcript turn, extraction, age sample, risk assessment, offer, finalisation) is written to the `audit_log` table with a UTC timestamp.
-
----
-
-## Troubleshooting
-
-**The mic button does nothing.** Your browser doesn't expose Web Speech (Firefox doesn't, today). Use Chrome or Edge, or click **Type instead** to fall back to keyboard input.
-
-**Camera permission denied.** Check the browser's site permissions for `localhost`. The age panel will show "—" until the camera is granted.
-
-**Port 8000 already in use.** Run `uvicorn main:app --port 9000` and visit `http://localhost:9000`.
-
-**Reset everything.** Delete `backend/loan_wizard.db` and restart — the schema is recreated on boot.
 
 ---
 
