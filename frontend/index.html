@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Poonawalla Fincorp — Loan Wizard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --blue:       #1a4fd6;
+  --blue-2:     #2563eb;
+  --blue-3:     #3b82f6;
+  --blue-light: #eff6ff;
+  --blue-mid:   #1e40af;
+  --navy:       #0f1e3d;
+  --navy-2:     #1e3a5f;
+  --white:      #ffffff;
+  --gray-50:    #f8fafc;
+  --gray-100:   #f1f5f9;
+  --gray-200:   #e2e8f0;
+  --gray-400:   #94a3b8;
+  --gray-500:   #64748b;
+  --gray-700:   #334155;
+  --gray-900:   #0f172a;
+  --green:      #16a34a;
+  --green-light:#dcfce7;
+  --red:        #dc2626;
+  --red-light:  #fee2e2;
+  --gold:       #f59e0b;
+  --shadow:     0 24px 48px -12px rgba(15,30,61,.18);
+  --shadow-sm:  0 4px 14px -2px rgba(15,30,61,.1);
+  --r:          14px;
+  --r-sm:       10px;
+  --sans:       'Manrope', -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  font-family: var(--sans);
+  color: var(--gray-900);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+a { text-decoration: none; color: inherit; }
+
+.screen { position: fixed; inset: 0; display: none; overflow-y: auto; }
+.screen.active { display: block; }
+
+/* 
+   LANDING
+    */
+#landing {
+  background: linear-gradient(180deg, #f0f5ff 0%, var(--white) 55%);
+}
+
+/* Top nav */
+.topnav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 56px;
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  position: sticky; top: 0; z-index: 10;
+}
+.nav-brand { display: flex; align-items: center; gap: 12px; }
+.nav-logo {
+  width: 40px; height: 40px;
+  background: var(--navy);
+  border-radius: 10px;
+  display: grid; place-items: center;
+  font-family: var(--sans); font-weight: 800; font-size: 17px; color: var(--white);
+}
+.nav-brand-name { font-weight: 700; font-size: 15px; color: var(--navy); line-height: 1.1; }
+.nav-links { display: flex; gap: 36px; }
+.nav-links a { font-size: 14px; font-weight: 500; color: var(--gray-700); transition: color .2s; }
+.nav-links a:hover { color: var(--blue); }
+.nav-right { display: flex; gap: 12px; align-items: center; }
+.nav-login { font-size: 14px; font-weight: 600; color: var(--gray-700); padding: 8px 16px; border-radius: var(--r-sm); transition: all .2s; }
+.nav-login:hover { background: var(--gray-100); }
+.nav-cta { background: var(--blue); color: var(--white); font-size: 14px; font-weight: 600; padding: 10px 22px; border-radius: var(--r-sm); transition: all .2s; }
+.nav-cta:hover { background: var(--blue-mid); }
+
+/* Hero */
+.hero {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  padding: 72px 56px 80px;
+  max-width: 1280px; margin: 0 auto;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 14px; border-radius: 999px;
+  background: var(--blue-light); color: var(--blue);
+  font-size: 12px; font-weight: 700; letter-spacing: .5px;
+  margin-bottom: 24px;
+}
+.hero-eyebrow::before { content: '✦'; font-size: 10px; }
+
+.hero-title {
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 800; line-height: 1.05; letter-spacing: -1.5px;
+  color: var(--navy);
+  margin-bottom: 22px;
+}
+.hero-title .hl { color: var(--blue-3); }
+
+.hero-sub {
+  font-size: 17px; line-height: 1.65; color: var(--gray-500);
+  max-width: 520px; margin-bottom: 36px;
+}
+
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 32px; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px;
+  background: var(--blue); color: var(--white);
+  font-size: 15px; font-weight: 700;
+  border-radius: var(--r-sm);
+  transition: all .2s;
+  box-shadow: 0 4px 14px rgba(26,79,214,.3);
+}
+.btn-primary:hover { background: var(--blue-mid); transform: translateY(-1px); }
+.btn-primary svg { width: 18px; height: 18px; }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 24px;
+  background: var(--white); color: var(--navy);
+  font-size: 15px; font-weight: 600;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--r-sm);
+  transition: all .2s;
+}
+.btn-secondary:hover { border-color: var(--blue-3); color: var(--blue); }
+
+.trust-bar { display: flex; gap: 24px; flex-wrap: wrap; }
+.trust-item {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 12.5px; font-weight: 500; color: var(--gray-500);
+}
+.trust-item svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
+
+/* hero right — floating video mock */
+.hero-right { position: relative; display: grid; place-items: center; }
+.video-hero-wrap {
+  position: relative; width: 100%; max-width: 560px;
+}
+.video-hero-card {
+  background: var(--navy);
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  position: relative;
+  box-shadow: var(--shadow);
+}
+.video-hero-img {
+  width: 100%; height: 100%; object-fit: cover; opacity: .85;
+  background: linear-gradient(135deg, #1a2a4a 0%, #1e4080 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+.live-badge {
+  position: absolute; top: 16px; left: 16px;
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(8px);
+  color: var(--white); font-size: 12px; font-weight: 600;
+  padding: 6px 12px; border-radius: 999px;
+}
+.live-dot { width: 7px; height: 7px; background: #ef4444; border-radius: 50%; animation: blink 1.2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.float-risk {
+  position: absolute; top: -14px; right: -20px;
+  background: var(--white); border-radius: var(--r);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-sm);
+  min-width: 160px;
+}
+.float-risk .label { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--gray-400); text-transform: uppercase; margin-bottom: 4px; }
+.float-risk .score { font-size: 28px; font-weight: 800; color: var(--navy); letter-spacing: -1px; }
+.float-risk .band { font-size: 12px; color: var(--green); font-weight: 600; }
+.float-risk .bar { height: 5px; background: var(--gray-200); border-radius: 3px; margin-top: 8px; overflow: hidden; }
+.float-risk .bar-fill { height: 100%; width: 78%; background: linear-gradient(90deg, var(--blue-3), var(--blue)); border-radius: 3px; }
+
+.float-offer {
+  position: absolute; bottom: -16px; left: -10px;
+  background: var(--navy-2); color: var(--white);
+  border-radius: var(--r);
+  padding: 14px 18px;
+  box-shadow: var(--shadow);
+  min-width: 200px;
+}
+.float-offer .pre-tag { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: rgba(255,255,255,.55); text-transform: uppercase; margin-bottom: 4px; }
+.float-offer .amount { font-size: 30px; font-weight: 800; letter-spacing: -1px; }
+.float-offer .terms { font-size: 12px; color: rgba(255,255,255,.6); margin-top: 2px; }
+
+.float-transcript {
+  position: absolute; bottom: 40px; right: 16px; left: 16px;
+  background: rgba(255,255,255,.95); backdrop-filter: blur(12px);
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+  font-size: 12px; color: var(--gray-700); line-height: 1.4;
+}
+.float-transcript .ttag { font-size: 10px; font-weight: 700; letter-spacing: .8px; color: var(--blue); text-transform: uppercase; margin-bottom: 3px; }
+
+/* Capabilities section */
+.section { padding: 80px 56px; max-width: 1280px; margin: 0 auto; }
+.section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--blue); text-transform: uppercase; margin-bottom: 14px; }
+.section-title { font-size: clamp(30px, 4vw, 48px); font-weight: 800; letter-spacing: -1px; color: var(--navy); margin-bottom: 16px; line-height: 1.1; }
+.section-sub { font-size: 16px; color: var(--gray-500); max-width: 560px; line-height: 1.6; margin-bottom: 48px; }
+
+.caps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.cap-card {
+  background: var(--white); border: 1.5px solid var(--gray-200);
+  border-radius: 16px; padding: 28px 26px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.cap-card:hover { border-color: var(--blue-3); box-shadow: var(--shadow-sm); }
+.cap-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: var(--blue); display: grid; place-items: center;
+  margin-bottom: 18px;
+  color: var(--white);
+}
+.cap-icon svg { width: 24px; height: 24px; }
+.cap-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.cap-desc { font-size: 14px; color: var(--gray-500); line-height: 1.55; }
+
+/* Steps */
+.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.step-card {
+  background: var(--white); border: 1.5px solid var(--gray-200);
+  border-radius: 16px; padding: 24px;
+}
+.step-num { font-size: 36px; font-weight: 800; color: var(--blue); letter-spacing: -1px; margin-bottom: 14px; }
+.step-title { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.step-desc { font-size: 13px; color: var(--gray-500); line-height: 1.55; }
+
+/* CTA bottom */
+.cta-section {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue-mid) 100%);
+  border-radius: 20px;
+  padding: 56px 64px;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 40px; align-items: center;
+  margin: 0 56px 80px;
+}
+.cta-section h2 { font-size: clamp(26px, 3vw, 42px); font-weight: 800; color: var(--white); letter-spacing: -1px; line-height: 1.1; margin-bottom: 10px; }
+.cta-section p { color: rgba(255,255,255,.65); font-size: 15px; }
+.cta-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cta-stat {
+  background: rgba(255,255,255,.1); border-radius: var(--r-sm);
+  padding: 18px 20px; color: var(--white); text-align: center;
+}
+.cta-stat .n { font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+.cta-stat .l { font-size: 11px; color: rgba(255,255,255,.6); margin-top: 2px; text-transform: uppercase; letter-spacing: .8px; }
+
+.compliance-bar {
+  display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+  padding: 28px 56px;
+  border-top: 1px solid var(--gray-200);
+}
+.comp-badge {
+  padding: 10px 24px; border: 1.5px solid var(--gray-200);
+  border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--gray-500);
+}
+
+footer {
+  background: var(--navy);
+  padding: 48px 56px 28px;
+  color: rgba(255,255,255,.7);
+}
+.footer-top { display: grid; grid-template-columns: 280px repeat(4, 1fr); gap: 40px; margin-bottom: 36px; }
+.footer-brand-name { font-weight: 700; font-size: 15px; color: var(--white); margin-bottom: 10px; }
+.footer-brand-desc { font-size: 13px; line-height: 1.6; }
+.footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 14px; }
+.footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,.6); margin-bottom: 8px; transition: color .2s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { padding-top: 20px; border-top: 1px solid rgba(255,255,255,.08); display: flex; justify-content: space-between; font-size: 12px; }
+
+/* 
+   CONSENT MODAL OVERLAY
+    */
+#consent { display: none; }
+#consent.active { display: flex; align-items: center; justify-content: center; }
+#consent { 
+  background: rgba(15,30,61,.55); 
+  backdrop-filter: blur(6px);
+}
+
+.modal-shell {
+  background: var(--white);
+  border-radius: 20px;
+  width: 92%; max-width: 660px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  animation: slideUp .3s ease;
+}
+@keyframes slideUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: none; } }
+
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.modal-brand { display: flex; align-items: center; gap: 12px; }
+.modal-brand .logo { width: 36px; height: 36px; background: var(--navy); border-radius: 9px; display: grid; place-items: center; color: var(--white); font-weight: 800; font-size: 14px; }
+.modal-brand .name { font-weight: 700; font-size: 14px; color: var(--navy); line-height: 1.1; }
+.modal-brand .sub { font-size: 11px; color: var(--gray-400); }
+.modal-close { width: 30px; height: 30px; border-radius: 50%; background: var(--gray-100); display: grid; place-items: center; cursor: pointer; color: var(--gray-500); font-size: 16px; transition: all .2s; border: none; }
+.modal-close:hover { background: var(--gray-200); }
+
+/* Step progress bar */
+.stepper {
+  padding: 0 28px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.stepper-track {
+  display: flex; gap: 0;
+}
+.step-tab {
+  flex: 1; padding: 14px 0;
+  display: flex; flex-direction: column; gap: 4px;
+  position: relative;
+}
+.step-tab::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--gray-200); border-radius: 2px;
+}
+.step-tab.done::after  { background: var(--blue); }
+.step-tab.active::after { background: var(--blue); }
+.step-tab .step-n { font-size: 10px; font-weight: 700; letter-spacing: .8px; color: var(--gray-400); text-transform: uppercase; }
+.step-tab.done .step-n,
+.step-tab.active .step-n { color: var(--blue); }
+
+/* Modal body */
+.modal-body { padding: 36px 28px; }
+
+/* Consent step */
+.consent-icon {
+  width: 64px; height: 64px; border-radius: 18px;
+  background: var(--blue); display: grid; place-items: center;
+  margin: 0 auto 20px; color: var(--white);
+}
+.consent-icon svg { width: 32px; height: 32px; }
+.modal-body h2 { font-size: 26px; font-weight: 800; color: var(--navy); text-align: center; margin-bottom: 12px; letter-spacing: -.5px; }
+.modal-body .consent-lede { font-size: 14px; color: var(--gray-500); text-align: center; max-width: 480px; margin: 0 auto 28px; line-height: 1.6; }
+
+.perm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+.perm-item {
+  border: 1.5px solid var(--gray-200); border-radius: var(--r);
+  padding: 18px 16px; text-align: center;
+  transition: border-color .2s;
+}
+.perm-item:hover { border-color: var(--blue-3); }
+.perm-item .pi { width: 40px; height: 40px; border-radius: var(--r-sm); background: var(--blue-light); display: grid; place-items: center; margin: 0 auto 10px; color: var(--blue); }
+.perm-item .pi svg { width: 20px; height: 20px; }
+.perm-item .pt { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.perm-item .pd { font-size: 11.5px; color: var(--gray-400); line-height: 1.4; }
+
+.consent-checkbox {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--gray-50); border: 1px solid var(--gray-200);
+  border-radius: var(--r-sm); padding: 14px 16px;
+  margin-bottom: 20px; cursor: pointer;
+}
+.consent-checkbox input { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; accent-color: var(--blue); cursor: pointer; }
+.consent-checkbox .cl { font-size: 13px; color: var(--gray-700); line-height: 1.5; }
+
+/* CTA inside modal */
+.modal-cta {
+  width: 100%; padding: 14px;
+  background: var(--blue); color: var(--white);
+  font-size: 15px; font-weight: 700;
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all .2s;
+  box-shadow: 0 4px 14px rgba(26,79,214,.3);
+}
+.modal-cta:hover { background: var(--blue-mid); }
+.modal-cta svg { width: 18px; height: 18px; }
+
+.modal-back {
+  width: 100%; padding: 10px;
+  font-size: 13px; color: var(--gray-400);
+  margin-top: 10px; text-align: center; cursor: pointer;
+  transition: color .2s; background: none; border: none;
+}
+.modal-back:hover { color: var(--gray-700); }
+
+/* 
+   LIVE CAPTURE step (inside modal)
+    */
+.capture-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 20px; align-items: start;
+}
+.video-frame {
+  border-radius: var(--r); overflow: hidden;
+  background: var(--navy);
+  aspect-ratio: 4/3; position: relative;
+}
+#localVideo {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scaleX(-1);
+}
+.video-live-badge {
+  position: absolute; top: 10px; left: 10px;
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(0,0,0,.5); backdrop-filter: blur(6px);
+  color: var(--white); font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 999px;
+}
+.video-geo {
+  position: absolute; bottom: 10px; left: 10px;
+  background: rgba(0,0,0,.5); backdrop-filter: blur(6px);
+  color: var(--white); font-size: 10px; font-weight: 600;
+  padding: 4px 10px; border-radius: 999px;
+}
+.video-device {
+  position: absolute; bottom: 10px; right: 10px;
+  background: rgba(0,0,0,.5); backdrop-filter: blur(6px);
+  color: var(--white); font-size: 10px; font-weight: 600;
+  padding: 4px 10px; border-radius: 999px;
+}
+.capture-checks { display: flex; flex-direction: column; gap: 10px; }
+.capture-title { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+.capture-sub { font-size: 13px; color: var(--gray-500); line-height: 1.5; margin-bottom: 16px; }
+.check-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13.5px; color: var(--gray-700); font-weight: 500;
+}
+.check-item .ci { width: 22px; height: 22px; border-radius: 50%; background: var(--green-light); color: var(--green); display: grid; place-items: center; flex-shrink: 0; }
+.check-item .ci svg { width: 13px; height: 13px; }
+.check-item.pending .ci { background: var(--gray-100); color: var(--gray-400); }
+
+/* 
+   AI INTERVIEW (call screen) — full screen within modal
+    */
+#call { background: rgba(15,30,61,.55); backdrop-filter: blur(6px); }
+#call.active { display: flex; align-items: center; justify-content: center; }
+
+.call-shell {
+  background: var(--white);
+  border-radius: 20px;
+  width: 92%; max-width: 780px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  animation: slideUp .3s ease;
+  max-height: 92vh;
+  display: flex; flex-direction: column;
+}
+
+.call-interview {
+  display: grid; grid-template-columns: 2fr 3fr;
+  flex: 1; min-height: 0;
+}
+
+.call-video-side {
+  background: var(--navy);
+  position: relative;
+  min-height: 340px;
+  display: flex; flex-direction: column;
+}
+.call-video-side video {
+  width: 100%; height: 100%; object-fit: cover; flex: 1;
+}
+.rec-tag {
+  position: absolute; top: 10px; left: 10px;
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(0,0,0,.5); backdrop-filter: blur(6px);
+  color: var(--white); font-size: 10px; font-weight: 700;
+  padding: 4px 10px; border-radius: 999px;
+}
+.voice-viz {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: var(--white);
+  padding: 10px 14px;
+}
+.voice-viz .vv-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--blue); text-transform: uppercase; margin-bottom: 6px; }
+.voice-bars { display: flex; gap: 3px; align-items: flex-end; height: 24px; }
+.vbar {
+  width: 4px; background: var(--blue-3); border-radius: 2px;
+  animation: vbarAnim 1s infinite ease-in-out;
+}
+.vbar:nth-child(2) { animation-delay: .1s; }
+.vbar:nth-child(3) { animation-delay: .2s; }
+.vbar:nth-child(4) { animation-delay: .3s; }
+.vbar:nth-child(5) { animation-delay: .4s; }
+.vbar:nth-child(6) { animation-delay: .5s; }
+.vbar:nth-child(7) { animation-delay: .15s; }
+.vbar:nth-child(8) { animation-delay: .35s; }
+.vbar:nth-child(9) { animation-delay: .25s; }
+@keyframes vbarAnim {
+  0%,100% { height: 4px; }
+  50% { height: 20px; }
+}
+
+.call-chat-side {
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.chat-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.agent-info { display: flex; align-items: center; gap: 10px; }
+.agent-dot { width: 38px; height: 38px; background: linear-gradient(135deg, var(--blue), var(--blue-3)); border-radius: 50%; display: grid; place-items: center; color: var(--white); font-weight: 800; font-size: 14px; }
+.agent-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+.agent-role { font-size: 11px; color: var(--gray-400); }
+.chat-transcript-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--gray-400); text-transform: uppercase; }
+
+.chat-body { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+.chat-turn { padding: 10px 14px; border-radius: 10px; font-size: 13px; line-height: 1.5; max-width: 88%; }
+.chat-turn .who { font-size: 10px; font-weight: 700; letter-spacing: .8px; color: var(--gray-400); text-transform: uppercase; margin-bottom: 3px; }
+.chat-turn.agent { background: var(--gray-50); border: 1px solid var(--gray-200); }
+.chat-turn.customer { background: linear-gradient(135deg, var(--blue), var(--blue-mid)); color: var(--white); align-self: flex-end; }
+.chat-turn.customer .who { color: rgba(255,255,255,.6); }
+
+.chat-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--gray-200);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.captured-count { font-size: 12px; color: var(--gray-500); }
+.end-interview-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 18px;
+  background: var(--blue); color: var(--white);
+  font-size: 13px; font-weight: 700;
+  border-radius: var(--r-sm);
+  transition: all .2s;
+}
+.end-interview-btn:hover { background: var(--blue-mid); }
+.end-interview-btn svg { width: 15px; height: 15px; }
+
+/* inline text input + mic area (below chat modal) */
+.call-controls {
+  padding: 14px 20px;
+  background: var(--gray-50);
+  border-top: 1px solid var(--gray-200);
+  display: flex; gap: 10px;
+}
+.mic-btn {
+  flex: 1; padding: 11px 16px;
+  background: var(--navy); color: var(--white);
+  font-size: 13px; font-weight: 700;
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: all .2s;
+  user-select: none;
+}
+.mic-btn:hover { background: var(--blue-mid); }
+.mic-btn.recording { background: #dc2626; animation: micPulse 1s infinite; }
+.mic-btn svg { width: 16px; height: 16px; }
+@keyframes micPulse { 0%,100%{ box-shadow: 0 0 0 0 rgba(220,38,38,.4); } 50%{ box-shadow: 0 0 0 10px rgba(220,38,38,0); } }
+
+.type-link { font-size: 12px; color: var(--blue); cursor: pointer; text-decoration: underline; white-space: nowrap; align-self: center; }
+
+.text-input-wrap { display: none; padding: 0 20px 14px; background: var(--gray-50); }
+.text-input-wrap input {
+  width: 100%; padding: 10px 14px;
+  border: 1.5px solid var(--gray-200); border-radius: var(--r-sm);
+  font-family: var(--sans); font-size: 13px; background: var(--white);
+}
+.text-input-wrap input:focus { outline: 2px solid var(--blue); outline-offset: -2px; }
+
+/* 
+   RESULT SCREEN
+    */
+#result { background: var(--gray-50); display: none; }
+#result.active { display: block; }
+
+.result-wrap { max-width: 980px; margin: 0 auto; padding: 60px 40px; }
+
+.result-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 999px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.result-badge.approve { background: var(--green-light); color: var(--green); }
+.result-badge.refer   { background: #fef9c3; color: #854d0e; }
+.result-badge.reject  { background: var(--red-light); color: var(--red); }
+
+#resultTitle { font-size: clamp(32px, 5vw, 52px); font-weight: 800; color: var(--navy); letter-spacing: -1.5px; margin-bottom: 12px; }
+.result-sub { font-size: 16px; color: var(--gray-500); margin-bottom: 36px; max-width: 580px; line-height: 1.6; }
+
+/* Offer card matching image 10 */
+.offer-card {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue-mid) 100%);
+  border-radius: 18px;
+  padding: 32px 36px;
+  margin-bottom: 28px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 32px; align-items: start;
+  box-shadow: var(--shadow);
+}
+.offer-left .pre-tag { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: rgba(255,255,255,.5); text-transform: uppercase; margin-bottom: 8px; }
+.offer-left .main-amount { font-size: 56px; font-weight: 800; color: var(--white); letter-spacing: -2px; line-height: 1; }
+.offer-left .rate-line { font-size: 14px; color: rgba(255,255,255,.65); margin-top: 8px; }
+.emi-box { background: rgba(255,255,255,.12); border-radius: var(--r-sm); padding: 16px 18px; margin-top: 20px; }
+.emi-box .emi-label { font-size: 11px; font-weight: 700; letter-spacing: .8px; color: rgba(255,255,255,.5); text-transform: uppercase; margin-bottom: 4px; }
+.emi-box .emi-amount { font-size: 32px; font-weight: 800; color: var(--white); letter-spacing: -1px; }
+.tenure-tabs { display: flex; gap: 8px; margin-top: 16px; }
+.ttab {
+  padding: 7px 16px; border-radius: 999px;
+  font-size: 13px; font-weight: 600;
+  background: rgba(255,255,255,.1); color: rgba(255,255,255,.7);
+  cursor: pointer; transition: all .2s; border: none; font-family: var(--sans);
+}
+.ttab.active { background: var(--white); color: var(--navy); }
+
+.offer-right .approved-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green-light); color: var(--green);
+  font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 999px;
+  margin-bottom: 14px;
+}
+.offer-right h3 { font-size: 24px; font-weight: 800; color: var(--white); letter-spacing: -.5px; margin-bottom: 10px; }
+.offer-right p { font-size: 13px; color: rgba(255,255,255,.65); margin-bottom: 18px; line-height: 1.55; }
+.offer-checklist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+.offer-check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,.8); font-weight: 500; }
+.offer-check svg { width: 16px; height: 16px; color: var(--green); flex-shrink: 0; }
+.accept-btn {
+  width: 100%; padding: 13px;
+  background: var(--blue-3); color: var(--white);
+  font-size: 14px; font-weight: 700;
+  border-radius: var(--r-sm);
+  transition: all .2s; display: flex; align-items: center; justify-content: center;
+}
+.accept-btn:hover { background: var(--blue); }
+.later-btn {
+  width: 100%; padding: 10px;
+  background: rgba(255,255,255,.08); color: rgba(255,255,255,.65);
+  font-size: 13px; font-weight: 600;
+  border-radius: var(--r-sm);
+  margin-top: 8px; transition: all .2s;
+}
+.later-btn:hover { background: rgba(255,255,255,.15); }
+
+.offer-options-card {
+  background: var(--white); border: 1.5px solid var(--gray-200);
+  border-radius: 18px; padding: 28px 32px; margin-bottom: 24px;
+}
+.offer-options-card h4 { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+#offerTable { width: 100%; border-collapse: collapse; font-size: 13px; }
+#offerTable th { text-align: left; padding: 9px 12px; background: var(--gray-50); color: var(--gray-500); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; }
+#offerTable td { padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-700); }
+#offerTable tr:last-child td { border: none; }
+#offerTable tr:hover td { background: var(--gray-50); }
+
+.explain-card {
+  background: var(--navy); color: var(--white);
+  border-radius: 18px; padding: 28px 32px; margin-bottom: 28px;
+}
+.explain-card h4 { font-size: 18px; font-weight: 800; color: var(--white); margin-bottom: 14px; }
+.explain-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.explain-card li { font-size: 13px; color: rgba(255,255,255,.75); display: flex; gap: 10px; align-items: baseline; }
+.explain-card li::before { content: '◆'; color: var(--blue-3); font-size: 9px; flex-shrink: 0; }
+
+.result-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.result-cta {
+  padding: 13px 24px;
+  background: var(--blue); color: var(--white);
+  font-size: 14px; font-weight: 700;
+  border-radius: var(--r-sm);
+  transition: all .2s;
+}
+.result-cta:hover { background: var(--blue-mid); }
+.result-ghost {
+  padding: 12px 20px;
+  background: var(--white); color: var(--gray-700);
+  font-size: 14px; font-weight: 600;
+  border: 1.5px solid var(--gray-200); border-radius: var(--r-sm);
+  transition: all .2s; cursor: pointer;
+}
+.result-ghost:hover { border-color: var(--blue-3); color: var(--blue); }
+
+/* hidden canvas */
+#snapshotCanvas { display: none; }
+#faceBox { display: none; position: absolute; border: 2px solid var(--blue-3); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<!-- ============== LANDING ============== -->
+<section id="landing" class="screen active">
+
+  <!-- Top nav -->
+  <nav class="topnav">
+    <div class="nav-brand">
+      <div class="nav-logo">P</div>
+      <div>
+        <div class="nav-brand-name">POONAWALLA<br>FINCORP</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#">Features</a>
+      <a href="#">How It Works</a>
+      <a href="#">Offers</a>
+      <a href="#">Trust &amp; Compliance</a>
+    </div>
+    <div class="nav-right">
+      <a class="nav-login" href="#">LOGIN</a>
+      <button id="startBtn" class="nav-cta">APPLY NOW</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">AGENTIC AI · NEW</div>
+      <h1 class="hero-title">Your loan,<br>approved on a<br><span class="hl">video call.</span></h1>
+      <p class="hero-sub">
+        Skip the paperwork. Speak naturally. Our Agentic AI captures consent,
+        verifies identity, assesses risk and generates a personalised offer — all in
+        a single secure video session.
+      </p>
+      <div class="hero-btns">
+        <button id="startBtn2" class="btn-primary">
+          Start Video Onboarding
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn-secondary">Watch a 60s Demo</button>
+      </div>
+      <div class="trust-bar">
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          RBI Compliant
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          256-bit Secure Stream
+        </div>
+        <div class="trust-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Decision in 3 minutes
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="video-hero-wrap">
+        <div class="video-hero-card">
+          <div class="video-hero-img">
+            <!-- decorative gradient stand-in for hero image -->
+          </div>
+          <div class="live-badge"><span class="live-dot"></span> LIVE · 02:14</div>
+          <div class="float-transcript">
+            <div class="ttag">AI AGENT · TRANSCRIBING</div>
+            "I work as a senior software engineer at TCS, monthly income around ₹1.4 lakh..."
+          </div>
+        </div>
+        <div class="float-risk">
+          <div class="label">RISK SCORE</div>
+          <div class="score">782 <span style="font-size:16px; font-weight:500; color: var(--gray-400)">/ Low</span></div>
+          <div class="bar"><div class="bar-fill"></div></div>
+        </div>
+        <div class="float-offer">
+          <div class="pre-tag">PRE-APPROVED OFFER</div>
+          <div class="amount">₹ 8,50,000</div>
+          <div class="terms">@ 11.49% · 36 months</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Capabilities -->
+  <div class="section" style="padding-top:20px;">
+    <div class="section-eyebrow">CAPABILITIES</div>
+    <div class="section-title">One conversation.<br>An entire loan journey.</div>
+    <div class="section-sub">The Agentic AI orchestrates speech, vision, policy and risk models in a single live session — so customers walk away with a personalised offer, not a pile of forms.</div>
+    <div class="caps-grid">
+      <div class="cap-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg></div>
+        <div class="cap-title">Speech-to-Text &amp; Consent</div>
+        <div class="cap-desc">Captures verbal consent and key disclosures with auditable transcripts.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/><circle cx="12" cy="8" r="1.5" fill="currentColor"/></svg></div>
+        <div class="cap-title">Vision-Based Age Check</div>
+        <div class="cap-desc">Real-time facial analysis validates declared age against policy thresholds.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+        <div class="cap-title">LLM Intelligence Layer</div>
+        <div class="cap-desc">Normalises unstructured answers and classifies risk band &amp; persona.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <div class="cap-title">Auto-Filled Application</div>
+        <div class="cap-desc">Extracted data populates the form — zero typing for the customer.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="cap-title">Fraud &amp; Geo Signals</div>
+        <div class="cap-desc">Cross-checks location, device and behavioural flags in real time.</div>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+        <div class="cap-title">Audit-Ready Vault</div>
+        <div class="cap-desc">Video, transcripts and decisions stored with regulatory traceability.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8 Steps -->
+  <div class="section" style="padding-top:0;">
+    <div class="section-eyebrow">END-TO-END FLOW</div>
+    <div class="section-title">From "hello" to "approved" in<br>eight intelligent steps.</div>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">01</div><div class="step-title">Customer Entry</div><div class="step-desc">Secure link via SMS, WhatsApp, email or campaign launches a controlled video session.</div></div>
+      <div class="step-card"><div class="step-num">02</div><div class="step-title">Live Capture</div><div class="step-desc">Video, audio, geo-location, device and session metadata streamed in real time.</div></div>
+      <div class="step-card"><div class="step-num">03</div><div class="step-title">STT + Consent</div><div class="step-desc">Verbal answers transcribed; explicit consent recorded for an auditable trail.</div></div>
+      <div class="step-card"><div class="step-num">04</div><div class="step-title">Vision Age Check</div><div class="step-desc">CV model estimates age and validates against the customer's declaration.</div></div>
+      <div class="step-card"><div class="step-num">05</div><div class="step-title">Risk &amp; Policy</div><div class="step-desc">Bureau data, ML risk scores and policy rules evaluated deterministically.</div></div>
+      <div class="step-card"><div class="step-num">06</div><div class="step-title">LLM Intelligence</div><div class="step-desc">Conversational context normalised; persona and confidence indicators output.</div></div>
+      <div class="step-card"><div class="step-num">07</div><div class="step-title">Offer Generation</div><div class="step-desc">Personalised loan amount, tenure, interest rate and EMI structures generated.</div></div>
+      <div class="step-card"><div class="step-num">08</div><div class="step-title">Audit &amp; Vault</div><div class="step-desc">Recordings, transcripts, geo, decisions and offers archived for compliance.</div></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="padding: 0 56px 0;">
+    <div class="cta-section">
+      <div>
+        <p style="font-size:11px; font-weight:700; letter-spacing:2px; color:rgba(255,255,255,.45); text-transform:uppercase; margin-bottom:10px;">READY IN 3 MINUTES</p>
+        <h2>Your next loan starts with<br>a hello.</h2>
+        <p>No forms. No branch visits. Just a quick video chat with our Agentic AI to unlock your personalised offer.</p>
+        <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
+          <button id="startBtn3" class="btn-primary">Start Video Onboarding</button>
+          <button class="btn-secondary" style="background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.2); color:var(--white);">Talk to Sales</button>
+        </div>
+      </div>
+      <div class="cta-stats">
+        <div class="cta-stat"><div class="n">2:47</div><div class="l">Avg. decision time</div></div>
+        <div class="cta-stat"><div class="n">–68%</div><div class="l">Drop-off reduction</div></div>
+        <div class="cta-stat"><div class="n">100%</div><div class="l">KYC compliance</div></div>
+        <div class="cta-stat"><div class="n">12+</div><div class="l">Fraud signals/min</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compliance bar -->
+  <div class="compliance-bar">
+    <div class="comp-badge">RBI Compliant</div>
+    <div class="comp-badge">ISO 27001 Secured</div>
+    <div class="comp-badge">DPDP Act Ready</div>
+    <div class="comp-badge">AES-256 Encrypted</div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div style="width:34px;height:34px;background:var(--white);border-radius:8px;display:grid;place-items:center;color:var(--navy);font-weight:800;font-size:14px;">P</div>
+          <div class="footer-brand-name">POONAWALLA FINCORP</div>
+        </div>
+        <div class="footer-brand-desc">Your trusted partner for fulfilling personal, professional and business needs — now with Agentic AI.</div>
+      </div>
+      <div class="footer-col">
+        <h4>LOANS</h4>
+        <a href="#">Personal Loan</a>
+        <a href="#">Business Loan</a>
+        <a href="#">Professional Loan</a>
+        <a href="#">Pre-Owned Car Loan</a>
+      </div>
+      <div class="footer-col">
+        <h4>COMPANY</h4>
+        <a href="#">About</a>
+        <a href="#">Investors</a>
+        <a href="#">Careers</a>
+        <a href="#">Newsroom</a>
+      </div>
+      <div class="footer-col">
+        <h4>SUPPORT</h4>
+        <a href="#">Contact</a>
+        <a href="#">Quick Pay</a>
+        <a href="#">Branches</a>
+        <a href="#">Grievance</a>
+      </div>
+      <div class="footer-col">
+        <h4>ADMIN</h4>
+        <a href="/admin">Admin Dashboard ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Poonawalla Fincorp. All rights reserved.</span>
+      <span>Agentic AI Onboarding · v1.0 Prototype</span>
+    </div>
+  </footer>
+</section>
+
+<!-- ============== CONSENT MODAL ============== -->
+<section id="consent" class="screen">
+  <div class="modal-shell">
+    <div class="modal-header">
+      <div class="modal-brand">
+        <div class="logo">P</div>
+        <div>
+          <div class="name">Agentic AI Loan Onboarding</div>
+          <div class="sub">Secure · Encrypted · RBI Compliant</div>
+        </div>
+      </div>
+      <button id="backBtn" class="modal-close" title="Close">✕</button>
+    </div>
+    <!-- Stepper -->
+    <div class="stepper">
+      <div class="stepper-track">
+        <div class="step-tab active" id="st1"><span class="step-n">01 · CONSENT</span></div>
+        <div class="step-tab" id="st2"><span class="step-n">02 · LIVE CAPTURE</span></div>
+        <div class="step-tab" id="st3"><span class="step-n">03 · AI INTERVIEW</span></div>
+        <div class="step-tab" id="st4"><span class="step-n">04 · VERIFICATION</span></div>
+        <div class="step-tab" id="st5"><span class="step-n">05 · RISK ENGINE</span></div>
+        <div class="step-tab" id="st6"><span class="step-n">06 · YOUR OFFER</span></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="consent-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <h2>Before we begin</h2>
+      <p class="consent-lede">We'll use your camera, microphone and approximate location during this 3-minute video session. The recording, transcript and decision are stored securely for regulatory audit.</p>
+
+      <div class="perm-grid">
+        <div class="perm-item">
+          <div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 10l4.553-2.276A1 1 0 0121 8.68v6.64a1 1 0 01-1.447.894L15 14"/><rect x="3" y="6" width="12" height="12" rx="2"/></svg></div>
+          <div class="pt">Camera &amp; Mic</div>
+          <div class="pd">For live identity verification</div>
+        </div>
+        <div class="perm-item">
+          <div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="pt">Location</div>
+          <div class="pd">For fraud and compliance checks</div>
+        </div>
+        <div class="perm-item">
+          <div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg></div>
+          <div class="pt">Voice Recording</div>
+          <div class="pd">Auditable consent trail</div>
+        </div>
+      </div>
+
+      <label class="consent-checkbox">
+        <input type="checkbox" id="consentCheck" checked>
+        <div class="cl">I consent to the recording, transcription and processing of this session by Poonawalla Fincorp's Agentic AI for the purpose of loan origination.</div>
+      </label>
+
+      <button id="proceedBtn" class="modal-cta">
+        I Agree — Start Session
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+      <button id="cancelBtn" class="modal-back">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============== VIDEO CALL ============== -->
+<section id="call" class="screen">
+  <div class="call-shell">
+    <div class="modal-header">
+      <div class="modal-brand">
+        <div class="logo">P</div>
+        <div>
+          <div class="name">Agentic AI Loan Onboarding</div>
+          <div class="sub">Secure · Encrypted · RBI Compliant</div>
+        </div>
+      </div>
+      <button id="endBtn" class="modal-close" title="End Call">✕</button>
+    </div>
+    <!-- Stepper (call step 3) -->
+    <div class="stepper">
+      <div class="stepper-track">
+        <div class="step-tab done"><span class="step-n">01 · CONSENT</span></div>
+        <div class="step-tab done"><span class="step-n">02 · LIVE CAPTURE</span></div>
+        <div class="step-tab active"><span class="step-n">03 · AI INTERVIEW</span></div>
+        <div class="step-tab" id="cst4"><span class="step-n">04 · VERIFICATION</span></div>
+        <div class="step-tab" id="cst5"><span class="step-n">05 · RISK ENGINE</span></div>
+        <div class="step-tab" id="cst6"><span class="step-n">06 · YOUR OFFER</span></div>
+      </div>
+    </div>
+
+    <div class="call-interview">
+      <!-- Left: video -->
+      <div class="call-video-side">
+        <video id="localVideo" autoplay muted playsinline style="flex:1; min-height:0;"></video>
+        <canvas id="snapshotCanvas"></canvas>
+        <div id="faceBox"></div>
+        <div class="rec-tag"><span class="live-dot"></span> REC</div>
+        <div class="voice-viz">
+          <div class="vv-label">VOICE LEVEL</div>
+          <div class="voice-bars">
+            <div class="vbar" style="height:8px"></div>
+            <div class="vbar" style="height:4px"></div>
+            <div class="vbar" style="height:14px"></div>
+            <div class="vbar" style="height:6px"></div>
+            <div class="vbar" style="height:18px"></div>
+            <div class="vbar" style="height:10px"></div>
+            <div class="vbar" style="height:16px"></div>
+            <div class="vbar" style="height:8px"></div>
+            <div class="vbar" style="height:12px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: chat -->
+      <div class="call-chat-side">
+        <div class="chat-header">
+          <div class="agent-info">
+            <div class="agent-dot">A</div>
+            <div>
+              <div class="agent-name">Aria · AI Loan Agent</div>
+            </div>
+          </div>
+          <span class="chat-transcript-label">Real-time transcript</span>
+        </div>
+
+        <div class="chat-body" id="transcript"></div>
+
+        <div class="chat-footer">
+          <span class="captured-count" id="capturedCount">0 / 8 responses captured</span>
+          <button class="end-interview-btn" onclick="endCall()">
+            End Interview
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="call-controls">
+      <button id="micBtn" class="mic-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+        <span id="micBtnText">Hold to Speak</span>
+      </button>
+      <a href="#" class="type-link" id="typeMode">Type answer</a>
+    </div>
+    <div id="textInputWrap" class="text-input-wrap">
+      <input id="textInput" type="text" placeholder="Type your answer and press Enter…" />
+    </div>
+
+    <!-- hidden signals (kept for JS compatibility) -->
+    <div style="display:none">
+      <span id="sigFace"></span><span id="sigAge"></span><span id="sigLive"></span>
+      <span id="sigGeo"></span><span id="sessionIdDisplay"></span>
+      <div id="captured"></div>
+      <div id="agentAvatar"></div><div id="agentSpeaking"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== OFFER / RESULT ============== -->
+<section id="result" class="screen">
+  <div class="result-wrap">
+    <div id="resultBadge" class="result-badge">DECISION</div>
+    <h2 id="resultTitle">Your Personalised Offer</h2>
+    <p id="resultSub" class="result-sub"></p>
+
+    <div id="offerCard" class="offer-card">
+      <div class="offer-left">
+        <div class="pre-tag">PRE-APPROVED OFFER</div>
+        <div class="main-amount" id="offerAmount">—</div>
+        <div class="rate-line" id="offerRateLine">—</div>
+        <div class="emi-box">
+          <div class="emi-label">Monthly EMI</div>
+          <div class="emi-amount" id="offerEmi">—</div>
+        </div>
+        <div class="tenure-tabs">
+          <button class="ttab" data-tenure="24">24 mo</button>
+          <button class="ttab active" data-tenure="36">36 mo</button>
+          <button class="ttab" data-tenure="60">60 mo</button>
+        </div>
+      </div>
+      <div class="offer-right">
+        <div class="approved-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:12px;height:12px;"><path d="M20 6L9 17l-5-5"/></svg>
+          APPROVED IN 2 MIN 47 SEC
+        </div>
+        <h3 id="offerPersonalTitle">You're all set.</h3>
+        <p>Your offer is locked for 7 days. Proceed to e-sign your agreement and funds will be disbursed within 24 hours.</p>
+        <div class="offer-checklist">
+          <div class="offer-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> No collateral required</div>
+          <div class="offer-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Zero foreclosure charges after 6 months</div>
+          <div class="offer-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Funds disbursed in 24 hours</div>
+          <div class="offer-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Full audit trail saved to your locker</div>
+        </div>
+        <button class="accept-btn" id="acceptBtn">Accept &amp; e-Sign</button>
+        <button class="later-btn" id="reportBtn">Download Audit Report</button>
+      </div>
+    </div>
+
+    <div class="offer-options-card" id="offerOptionsCard">
+      <h4>Other tenure options</h4>
+      <table id="offerTable"></table>
+    </div>
+
+    <div class="explain-card">
+      <h4>Why this offer?</h4>
+      <ul id="explainList"></ul>
+    </div>
+
+    <div class="result-actions">
+      <button class="result-ghost" id="restartBtn">New Application</button>
+    </div>
+  </div>
+</section>
+
+<script src="/static/app.js"></script>
+<script>
+// Wire up extra landing page buttons
+document.getElementById('startBtn').addEventListener('click', () => show('consent'));
+document.getElementById('startBtn2').addEventListener('click', () => show('consent'));
+document.getElementById('startBtn3').addEventListener('click', () => show('consent'));
+document.getElementById('cancelBtn').addEventListener('click', () => show('landing'));
+
+// Update captured count dynamically
+const _origRenderCaptured = window.renderCaptured;
+if (typeof renderCaptured !== 'undefined') {
+  const orig = renderCaptured;
+  window.renderCaptured = function() {
+    orig();
+    const keys = Object.keys(window.FIELD_LABELS || {}).filter(k => state.collected[k] != null);
+    const el = document.getElementById('capturedCount');
+    if (el) el.textContent = keys.length + ' / 8 responses captured';
+  };
+}
+</script>
+</body>
+</html>
